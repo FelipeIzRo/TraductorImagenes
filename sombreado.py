@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import Canvas
 from PIL import ImageGrab
+from TraductorImagenes import TraductorImagenes
 
 class ScreenSelector:
     def __init__(self, root):
@@ -45,8 +46,10 @@ class ScreenSelector:
         # Take a screenshot of the entire screen
         bbox = (x1, y1, x2, y2)
         screenshot = ImageGrab.grab(bbox)
-        screenshot.save("test.png")
-        print("La región seleccionada se ha guardado como 'test.png'.")
+        translator = TraductorImagenes(screenshot)
+        translator.translate()
+        # screenshot.save("test.png")
+        # print("La región seleccionada se ha guardado como 'test.png'.")
 
 if __name__ == "__main__":
     root = tk.Tk()
