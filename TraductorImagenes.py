@@ -26,5 +26,7 @@ class TraductorImagenes:
             print("-"*50)
             print(trasnlated_text)
             print("-"*50)
-        else:
+            return trasnlated_text
+        else:            
             print('Error')
+            return 'Error'

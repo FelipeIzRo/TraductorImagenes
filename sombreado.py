@@ -4,14 +4,14 @@ from PIL import ImageGrab
 from TraductorImagenes import TraductorImagenes
 
 class ScreenSelector:
-    def __init__(self, root):
+    def __init__(self, root, rootTranslated):
         self.root = root
         self.root.attributes('-fullscreen', True)
         self.root.bind("<ButtonPress-1>", self.on_button_press)
         self.root.bind("<B1-Motion>", self.on_mouse_drag)
         self.root.bind("<ButtonRelease-1>", self.on_button_release)
         #self.root.attributes('-transparentcolor', 'white')  # Transparente para el color blanco
-        self.root.attributes('-alpha', 0.5)
+        self.root.attributes('-alpha', 0.1)
         
         self.canvas = Canvas(root, bg="white", highlightthickness=0)
         self.canvas.pack(fill=tk.BOTH, expand=True)
@@ -47,11 +47,16 @@ class ScreenSelector:
         bbox = (x1, y1, x2, y2)
         screenshot = ImageGrab.grab(bbox)
         translator = TraductorImagenes(screenshot)
-        translator.translate()
-        # screenshot.save("test.png")
+        
+        text = translator.translate()
+        label = tk.Label(rootTranslated,text=text)
+        label.pack(pady=20)
+        screenshot.save("test.png")
         # print("La región seleccionada se ha guardado como 'test.png'.")
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = ScreenSelector(root)
+    rootTranslated = tk.Tk()
+    app = ScreenSelector(root,rootTranslated)
+    rootTranslated.mainloop()
     root.mainloop()
