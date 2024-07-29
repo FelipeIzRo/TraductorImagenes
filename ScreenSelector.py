@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import Canvas
 from PIL import ImageGrab
 from TraductorImagenes import TraductorImagenes
+import time
 # from VentanaPrincipal import VentanaPrincipal
 
 import pytesseract
@@ -63,3 +64,5 @@ class ScreenSelector:
         self.main_window.LabelTranslated(text)
         # screenshot.save("test.png")
         # print("La región seleccionada se ha guardado como 'test.png'.")
+        time.sleep(0.5) 
+        self.root.destroy() 
