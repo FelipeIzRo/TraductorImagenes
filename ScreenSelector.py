@@ -3,9 +3,15 @@ from tkinter import Canvas
 from PIL import ImageGrab
 from TraductorImagenes import TraductorImagenes
 
+import pytesseract
+from googletrans import Translator
+
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
 class ScreenSelector:
-    def __init__(self, root, rootTranslated):
+    def __init__(self, root,root2):
         self.root = root
+        self.root2 = root2
         self.root.attributes('-fullscreen', True)
         self.root.bind("<ButtonPress-1>", self.on_button_press)
         self.root.bind("<B1-Motion>", self.on_mouse_drag)
@@ -46,17 +52,17 @@ class ScreenSelector:
         # Take a screenshot of the entire screen
         bbox = (x1, y1, x2, y2)
         screenshot = ImageGrab.grab(bbox)
-        translator = TraductorImagenes(screenshot)
         
+        translator = TraductorImagenes(screenshot)
         text = translator.translate()
-        label = tk.Label(rootTranslated,text=text)
-        label.pack(pady=20)
-        screenshot.save("test.png")
+        label = tk.Label(root2, text=text)
+        label.pack()
+        # screenshot.save("test.png")
         # print("La región seleccionada se ha guardado como 'test.png'.")
 
 if __name__ == "__main__":
     root = tk.Tk()
-    rootTranslated = tk.Tk()
-    app = ScreenSelector(root,rootTranslated)
-    rootTranslated.mainloop()
+    root2 = tk.Tk()
+    app = ScreenSelector(root,root2)
     root.mainloop()
+    root2.mainloop()
