@@ -15,17 +15,17 @@ class TraductorImagenes:
         # text = pytesseract.image_to_string(Image.open('test.png'))
         text = pytesseract.image_to_string(self.image)
         if text:
-            print("TEXTO RECOGIDO DE LA IMAGEN")
-            print("-"*50)
-            print(text)
-            print("-"*50)
+            # print("TEXTO RECOGIDO DE LA IMAGEN")
+            # print("-"*50)
+            # print(text)
+            # print("-"*50)
             trasnlator = Translator()
 
             trasnlated_text = trasnlator.translate(text, src='en',dest='es').text
-            print("TEXTO RTRADUCIDO")
-            print("-"*50)
-            print(trasnlated_text)
-            print("-"*50)
+            # print("TEXTO RTRADUCIDO")
+            # print("-"*50)
+            # print(trasnlated_text)
+            # print("-"*50)
             return trasnlated_text
         else:            
             print('Error')

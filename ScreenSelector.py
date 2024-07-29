@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import Canvas
 from PIL import ImageGrab
 from TraductorImagenes import TraductorImagenes
+# from VentanaPrincipal import VentanaPrincipal
 
 import pytesseract
 from googletrans import Translator
@@ -9,9 +10,9 @@ from googletrans import Translator
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 class ScreenSelector:
-    def __init__(self, root,root2):
-        self.root = root
-        self.root2 = root2
+
+    def __init__(self, main_window):
+        self.root=tk.Tk()
         self.root.attributes('-fullscreen', True)
         self.root.bind("<ButtonPress-1>", self.on_button_press)
         self.root.bind("<B1-Motion>", self.on_mouse_drag)
@@ -19,13 +20,17 @@ class ScreenSelector:
         #self.root.attributes('-transparentcolor', 'white')  # Transparente para el color blanco
         self.root.attributes('-alpha', 0.1)
         
-        self.canvas = Canvas(root, bg="white", highlightthickness=0)
+        self.canvas = Canvas(self.root, bg="white", highlightthickness=0)
         self.canvas.pack(fill=tk.BOTH, expand=True)
         
         self.start_x = None
         self.start_y = None
         self.rect_id = None
         self.selection = None
+
+        self.main_window = main_window
+
+        self.root.mainloop()
 
     def on_button_press(self, event):
         self.start_x = event.x
@@ -55,14 +60,6 @@ class ScreenSelector:
         
         translator = TraductorImagenes(screenshot)
         text = translator.translate()
-        label = tk.Label(root2, text=text)
-        label.pack()
+        self.main_window.LabelTranslated(text)
         # screenshot.save("test.png")
         # print("La región seleccionada se ha guardado como 'test.png'.")
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    root2 = tk.Tk()
-    app = ScreenSelector(root,root2)
-    root.mainloop()
-    root2.mainloop()
