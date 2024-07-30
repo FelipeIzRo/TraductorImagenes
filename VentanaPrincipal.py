@@ -35,4 +35,4 @@ class VentanaPrincipal:
         print (type(text))
     
     def instancia_selector(self):
-        selectro = ScreenSelector(self)
+        selector = ScreenSelector(self)
