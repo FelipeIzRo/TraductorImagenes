@@ -64,14 +64,16 @@ class ScreenSelector:
 
     def save_screenshot(self):
         # Take a screenshot of the entire screen
+        try:
+            screenshot = ImageGrab.grab(self.bbox)
         
-        screenshot = ImageGrab.grab(self.bbox)
-        
-        translator = TraductorImagenes(screenshot)
-        text = translator.translate()
-        self.main_window.LabelTranslated(text)
-
-        self.root.after(1000, self.save_screenshot)
+            translator = TraductorImagenes(screenshot)
+            text = translator.translate()
+            self.main_window.LabelTranslated(text)
+        except:
+            print('Error capturar imagen')
+        finally:
+            self.root.after(1000, self.save_screenshot)
         
         # screenshot.save("test.png")
         # print("La región seleccionada se ha guardado como 'test.png'.")
