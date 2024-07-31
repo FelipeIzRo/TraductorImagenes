@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import Canvas
 from PIL import ImageGrab
 from TraductorImagenes import TraductorImagenes
+import time
 # from VentanaPrincipal import VentanaPrincipal
 
 import pytesseract
@@ -28,7 +29,14 @@ class ScreenSelector:
         self.rect_id = None
         self.selection = None
 
+        self.x1= None
+        self.x2= None
+        self.y1= None
+        self.x2= None
+
         self.main_window = main_window
+
+        self.bbox = None
 
         self.root.mainloop()
 
@@ -49,17 +57,26 @@ class ScreenSelector:
         self.rect_id = None
 
         # Save the selected area
-        x1, y1 = min(self.start_x, end_x), min(self.start_y, end_y)
-        x2, y2 = max(self.start_x, end_x), max(self.start_y, end_y)
-        self.save_screenshot(x1, y1, x2, y2)
+        self.x1, self.y1 = min(self.start_x, end_x), min(self.start_y, end_y)
+        self.x2, self.y2 = max(self.start_x, end_x), max(self.start_y, end_y)
+        self.bbox = (self.x1, self.y1, self.x2, self.y2)
+        self.save_screenshot()
 
-    def save_screenshot(self, x1, y1, x2, y2):
+    def save_screenshot(self):
         # Take a screenshot of the entire screen
-        bbox = (x1, y1, x2, y2)
-        screenshot = ImageGrab.grab(bbox)
+        try:
+            screenshot = ImageGrab.grab(self.bbox)
         
-        translator = TraductorImagenes(screenshot)
-        text = translator.translate()
-        self.main_window.LabelTranslated(text)
+            translator = TraductorImagenes(screenshot)
+            text = translator.translate()
+            self.main_window.LabelTranslated(text)
+        except:
+            print('Error capturar imagen')
+        finally:
+            self.root.after(1000, self.save_screenshot)
+        
         # screenshot.save("test.png")
         # print("La región seleccionada se ha guardado como 'test.png'.")
+        # self.root.destroy() 
+
+        
