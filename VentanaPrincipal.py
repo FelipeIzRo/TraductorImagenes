@@ -36,7 +36,8 @@ class VentanaPrincipal:
         self.label = tk.Label(self.root, text='EmpezarTraduccion')
         self.label.pack()
         
-        self.selector = None
+        self.contador=0        
+        self.selector = {}
         self.root.mainloop()
         
     def LabelTranslated(self,text):
@@ -46,7 +47,9 @@ class VentanaPrincipal:
         print (type(text))
     
     def instancia_selector(self):
-        self.selector = ScreenSelector(self)
-
+        self.selector[f'ventana-{self.contador}'] = ScreenSelector(self)
+        self.contador+=1
     def stop_all_selectors(self):
-        self.selector.root.destroy()
+        for key in list(self.selector.keys()):
+            selector = self.selector.pop(key)
+            selector.root.destroy()

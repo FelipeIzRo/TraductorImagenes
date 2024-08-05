@@ -38,8 +38,6 @@ class ScreenSelector:
 
         self.bbox = None
 
-        self.destroy=False
-
 
     def on_button_press(self, event):
         self.start_x = event.x
@@ -64,10 +62,6 @@ class ScreenSelector:
         self.save_screenshot()
 
     def save_screenshot(self):
-        if self.destroy:
-            print('ENTRA DESTROY')
-            self.root.destroy() 
-            return
         # Take a screenshot of the entire screen
         try:
             screenshot = ImageGrab.grab(self.bbox)
@@ -83,6 +77,5 @@ class ScreenSelector:
         # screenshot.save("test.png")
         # print("La región seleccionada se ha guardado como 'test.png'.")
         # self.root.destroy() 
-    def destroy_selector(self):
-        self.destroy=True
+
         
